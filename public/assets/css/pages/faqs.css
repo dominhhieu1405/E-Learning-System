@@ -1,0 +1,30 @@
+.faq-container {
+    padding: 60px 0;
+    background: var(--ot-bg);
+}
+.faq-card {
+    background: var(--ot-bg-card);
+    border-radius: var(--ot-radius);
+    border: 1px solid var(--ot-border);
+    padding: 40px;
+    box-shadow: var(--ot-shadow);
+}
+.accordion-item {
+    border: 1px solid var(--ot-border);
+    margin-bottom: 10px;
+    border-radius: var(--ot-radius-sm) !important;
+    overflow: hidden;
+}
+.accordion-button:not(.collapsed) {
+    background-color: rgba(99, 102, 241, 0.05);
+    color: var(--ot-primary);
+    box-shadow: none;
+}
+.accordion-button {
+    font-weight: 600;
+    color: var(--ot-text);
+}
+.accordion-body {
+    color: var(--ot-text-muted);
+    line-height: 1.7;
+}

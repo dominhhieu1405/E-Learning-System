@@ -1,0 +1,22 @@
+<?php
+return [
+    'title_prefix' => 'Kết quả - ',
+    'result_title' => 'Kết quả thi: ',
+    'part' => 'Phần',
+    'time' => 'Thời gian',
+    'back_to_list' => 'Về danh sách',
+    'leaderboard' => 'Bảng xếp hạng',
+    'review_title' => 'Xem lại bài làm',
+    'hidden_answers_title' => 'Đáp án và lời giải đã được ẩn',
+    'hidden_answers_desc' => 'Đề thi này đã được cấu hình ẩn chi tiết câu hỏi. Bạn chỉ có thể xem điểm số tổng quát.',
+    'question' => 'Câu',
+    'unanswered' => 'Chưa trả lời',
+    'correct' => 'Đúng',
+    'wrong' => 'Sai',
+    'tf_label' => 'Đúng/Sai',
+    'your_choice' => 'Bạn chọn',
+    'answer' => 'Đáp án',
+    'you' => 'Bạn',
+    'empty' => '(trống)',
+    'explanation' => 'Giải thích',
+];

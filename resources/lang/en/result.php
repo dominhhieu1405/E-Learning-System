@@ -1,0 +1,22 @@
+<?php
+return [
+    'title_prefix' => 'Result - ',
+    'result_title' => 'Exam Result: ',
+    'part' => 'Part',
+    'time' => 'Time',
+    'back_to_list' => 'Back to list',
+    'leaderboard' => 'Leaderboard',
+    'review_title' => 'Review Attempt',
+    'hidden_answers_title' => 'Answers and explanations are hidden',
+    'hidden_answers_desc' => 'This exam has been configured to hide question details. You can only view the overall score.',
+    'question' => 'Question',
+    'unanswered' => 'Unanswered',
+    'correct' => 'Correct',
+    'wrong' => 'Wrong',
+    'tf_label' => 'True/False',
+    'your_choice' => 'Your choice',
+    'answer' => 'Answer',
+    'you' => 'You',
+    'empty' => '(empty)',
+    'explanation' => 'Explanation',
+];

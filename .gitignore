@@ -1,0 +1,11 @@
+.idea/
+/dev/
+
+!backend/
+# == Backend Ignore Files ==
+backend/.idea/
+backend/vendor/
+backend/composer.lock
+
+/resources/cache/
+/resources/tmp/

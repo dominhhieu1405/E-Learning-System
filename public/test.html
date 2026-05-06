@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý dữ liệu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container mt-4">
+    <h2 class="mb-4">Quản lý Dữ Liệu</h2>
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addElementModal">Thêm Phần Tử</button>
+    <div id="dataContainer" class="mb-3"></div>
+    <button class="btn btn-success" id="exportData">Xuất Dữ Liệu</button>
+    <pre id="jsonOutput" class="mt-3 p-2 bg-light border"></pre>
+</div>
+
+<div class="modal fade" id="addElementModal" tabindex="-1" aria-labelledby="addElementModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addElementModalLabel">Thêm/Chỉnh Sửa Phần Tử</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="elementForm">
+                    <input type="hidden" id="editIndex">
+                    <div class="mb-3">
+                        <label for="elementType" class="form-label">Loại phần tử</label>
+                        <select id="elementType" class="form-control">
+                            <option value="image">Hình ảnh</option>
+                            <option value="content">Nội dung</option>
+                            <option value="preview">Xem trước</option>
+                            <option value="button">Nút</option>
+                            <option value="button-group">Nhóm nút</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="inputFields">
+                        <label>URL:</label><input type="text" id="elementData" class="form-control">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" id="saveElement">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let data = [];
+
+    function renderData() {
+        $('#dataContainer').empty();
+        data.forEach((item, index) => {
+            let element = '';
+            if (item.type === 'image') {
+                element = `<div class="card p-3 mb-2">
+                        <img src="${item.data}" class="img-fluid" style="max-width: 150px;">
+                    </div>`;
+            } else if (item.type === 'content') {
+                element = `<div class="card p-3 mb-2"><p>${item.data}</p></div>`;
+            } else if (item.type === 'preview') {
+                element = `<div class="card p-3 mb-2"><a href="${item.data}" target="_blank">Xem trước</a></div>`;
+            } else if (item.type === 'button') {
+                element = `<div class="card p-3 mb-2">
+                        <a href="${item.data.url}" class="btn" style="background-color: ${item.data.color}; color: #fff;">
+                            ${item.data.text}
+                        </a>
+                    </div>`;
+            } else if (item.type === 'button-group') {
+                element = `<div class="card p-3 mb-2">
+                        ${item.data.map(btn => `<a href="${btn.url}" class="btn" style="background-color: ${btn.color}; color: #fff;">${btn.text}</a>`).join(' ')}
+                    </div>`;
+            }
+            element += `<button class="btn btn-warning edit-item" data-index="${index}">Sửa</button>
+                            <button class="btn btn-danger remove-item" data-index="${index}">Xóa</button>`;
+            $('#dataContainer').append(element);
+        });
+    }
+
+    $(document).on('click', '.remove-item', function () {
+        let index = $(this).data('index');
+        data.splice(index, 1);
+        renderData();
+    });
+
+    $(document).on('click', '.edit-item', function () {
+        let index = $(this).data('index');
+        let item = data[index];
+        $('#editIndex').val(index);
+        $('#elementType').val(item.type).trigger('change');
+    });
+
+    $('#elementType').change(function () {
+        let type = $(this).val();
+        let fields = '';
+        if (type === 'image' || type === 'preview') {
+            fields = '<label>URL:</label><input type="text" id="elementData" class="form-control">';
+        } else if (type === 'content') {
+            fields = '<label>Nội dung:</label><textarea id="elementData" class="form-control"></textarea>';
+        } else if (type === 'button') {
+            fields = `<label>Văn bản:</label><input type="text" id="buttonText" class="form-control">
+                          <label>Màu sắc:</label><input type="color" id="buttonColor" class="form-control">
+                          <label>URL:</label><input type="text" id="buttonUrl" class="form-control">`;
+        } else if (type === 'button-group') {
+            fields = '<label>Nhóm nút:</label><button class="btn btn-sm btn-success" type="button" id="addButtonList">Thêm Nút</button><div id="buttonList"></div>';
+        }
+        $('#inputFields').html(fields);
+    });
+
+    $(document).on('click', '#addButtonList', function () {
+        $('#buttonList').append(`<div class="mb-2">
+                <input type="text" class="form-control d-inline w-25" placeholder="Văn bản">
+                <input type="color" class="form-control d-inline w-25">
+                <input type="text" class="form-control d-inline w-25" placeholder="URL">
+                <button class="btn btn-danger btn-sm remove-btn">Xóa</button>
+            </div>`);
+    });
+
+    $(document).on('click', '.remove-btn', function () {
+        $(this).parent().remove();
+    });
+
+    $('#saveElement').click(function () {
+        let index = $('#editIndex').val();
+        let type = $('#elementType').val();
+        let newItem = {};
+        if (type === 'image' || type === 'preview' || type === 'content') {
+            newItem = { type, data: $('#elementData').val() };
+        } else if (type === 'button') {
+            newItem = {
+                type: 'button',
+                data: {
+                    text: $('#buttonText').val(),
+                    color: $('#buttonColor').val(),
+                    url: $('#buttonUrl').val()
+                }
+            };
+        }
+        if (index) {
+            data[index] = newItem;
+        } else {
+            data.push(newItem);
+        }
+        renderData();
+        $('#dataContainer').empty();
+        $('#addElementModal').modal('hide');
+    });
+    $('#exportData').click(() => {
+        $('#jsonOutput').text(JSON.stringify(data, null, 2));
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

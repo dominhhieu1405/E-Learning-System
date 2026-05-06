@@ -1,0 +1,44 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Services\\": "Services/",
+      "Controllers\\": "Controllers/",
+      "Middleware\\": "Middleware/",
+      "Models\\": "Models/",
+      "Config\\": "Config/",
+      "Command\\": "Command/"
+    }
+  },
+  "require": {
+    "pecee/simple-router": "^4.3.7.2",
+    "google/apiclient": "^2.15.0",
+    "jenssegers/blade": "^1.4",
+    "symfony/console": "^5.3",
+    "thingengineer/mysqli-database-class": "dev-master",
+    "voku/anti-xss": "^4.1",
+    "symfony/lock": "^5.3",
+    "php-curl-class/php-curl-class": "^9.3",
+    "phpfastcache/phpfastcache": "^8.0.7",
+    "intervention/image": "2.*",
+    "ext-gd": "*",
+    "ext-openssl": "*",
+    "ext-exif": "*",
+    "ext-json": "*",
+    "ext-curl": "*",
+    "phpmailer/phpmailer": "^6.6",
+    "guzzlehttp/guzzle": "^7.4",
+    "illuminate/view": "^8.83",
+    "ext-mbstring": "*",
+    "smalot/pdfparser": "^2.9",
+    "setasign/fpdi": "^2.6",
+    "setasign/fpdf": "^1.8"
+  },
+  "scripts": {
+    "pre-autoload-dump": "Google\\Task\\Composer::cleanup"
+  },
+  "extra": {
+    "google/apiclient-services": [
+      "Oauth2"
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+
+<?php
+
+use Services\Helper;
+use Symfony\Component\Console\Application;
+
+const ROOT_PATH = __DIR__ . '/../..';
+
+require_once ROOT_PATH . '/backend/vendor/autoload.php';
+
+Helper::load();
+$application = new Application();
+
+foreach (glob(ROOT_PATH. "/backend/Command/*.php") as $filename) {
+    $base_name = str_replace( '.php', '', basename($filename));
+    $command = "Command\\$base_name";
+    $application->add(new $command);
+}
+
+
+$application->run();

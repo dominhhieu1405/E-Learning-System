@@ -1,0 +1,66 @@
+.hover-primary:hover {
+    color: var(--ot-primary) !important;
+}
+
+.fs-11 {
+    font-size: 11px;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-10 {
+    font-size: 10px;
+}
+
+.bg-light-subtle {
+    background-color: var(--ot-bg) !important;
+}
+
+body.dark .bg-light-subtle {
+    background-color: #0f172a !important;
+}
+
+.reply-form-container {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-body .breadcrumb-item.active {
+    color: var(--ot-text) !important;
+}
+
+body.dark .breadcrumb-item.active {
+    color: #f1f5f9 !important;
+    font-weight: 500;
+}
+.latex-toolbar button {
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ot-text);
+    background: var(--ot-bg-card);
+}
+body.dark .latex-toolbar button {
+    background: #1e293b;
+    border-color: #334155 !important;
+    color: #e2e8f0;
+}
+.latex-toolbar button:hover {
+    background: var(--ot-primary);
+    color: #fff;
+}

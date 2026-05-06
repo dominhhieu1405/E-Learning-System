@@ -1,0 +1,20 @@
+.terms-container {
+    padding: 60px 0;
+    background: var(--ot-bg);
+}
+.terms-card {
+    background: var(--ot-bg-card);
+    border-radius: var(--ot-radius);
+    border: 1px solid var(--ot-border);
+    padding: 40px;
+    box-shadow: var(--ot-shadow);
+}
+.terms-content h2 {
+    margin-top: 30px;
+    font-weight: 700;
+    color: var(--ot-primary);
+}
+.terms-content p, .terms-content li {
+    color: var(--ot-text);
+    line-height: 1.8;
+}

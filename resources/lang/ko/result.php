@@ -1,0 +1,22 @@
+<?php
+return [
+    'title_prefix' => '결과 - ',
+    'result_title' => '시험 결과: ',
+    'part' => '파트',
+    'time' => '시간',
+    'back_to_list' => '목록으로 돌아가기',
+    'leaderboard' => '리더보드',
+    'review_title' => '시험 검토',
+    'hidden_answers_title' => '정답 및 해설이 숨겨져 있습니다',
+    'hidden_answers_desc' => '관리자가 이 시험의 문항 상세 정보를 숨기도록 설정했습니다. 전체 점수만 확인할 수 있습니다.',
+    'question' => '문항',
+    'unanswered' => '미응답',
+    'correct' => '정답',
+    'wrong' => '오답',
+    'tf_label' => '참/거짓',
+    'your_choice' => '내 선택',
+    'answer' => '정답',
+    'you' => '나',
+    'empty' => '(비어 있음)',
+    'explanation' => '해설',
+];

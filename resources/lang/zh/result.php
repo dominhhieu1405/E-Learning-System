@@ -1,0 +1,22 @@
+<?php
+return [
+    'title_prefix' => '结果 - ',
+    'result_title' => '考试结果：',
+    'part' => '部分',
+    'time' => '用时',
+    'back_to_list' => '返回列表',
+    'leaderboard' => '排行榜',
+    'review_title' => '回顾考试',
+    'hidden_answers_title' => '答案和解析已隐藏',
+    'hidden_answers_desc' => '管理员已配置此考试隐藏题目详情。您只能查看总分。',
+    'question' => '题目',
+    'unanswered' => '未回答',
+    'correct' => '正确',
+    'wrong' => '错误',
+    'tf_label' => '对/错',
+    'your_choice' => '您的选择',
+    'answer' => '答案',
+    'you' => '您',
+    'empty' => '(空)',
+    'explanation' => '解析',
+];

@@ -1,0 +1,275 @@
+/* =====================================================
+   Exam Interface CSS
+   ===================================================== */
+
+/* Exam Layout */
+.exam-container { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+/* Header */
+.exam-header {
+    background: linear-gradient(135deg, #1e1b4b, #312e81);
+    color: #fff;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-shrink: 0;
+    z-index: 100;
+}
+
+.exam-header .exam-title { font-weight: 700; font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: calc(100vw - 200px); }
+.exam-header .exam-part { font-size: 0.875rem; opacity: 0.85; }
+
+.exam-timer {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,255,255,0.15);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.exam-timer.warning { background: rgba(239,68,68,0.3); animation: timerPulse 1s infinite; }
+@keyframes timerPulse { 0%,100%{opacity:1}50%{opacity:0.6} }
+
+/* Main Body */
+.exam-body { display: flex; flex: 1; overflow: hidden; }
+
+/* Passage Panel */
+.exam-passage {
+    width: 40%;
+    border-right: 1px solid var(--ot-border);
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: var(--ot-bg);
+}
+
+.exam-passage .passage-content {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--ot-text);
+}
+
+/* Question Panel */
+.exam-question-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    background: var(--ot-bg-card);
+}
+
+.question-number {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-weight: 700; font-size: 1.1rem;
+    color: var(--ot-primary);
+    margin-bottom: 1rem;
+}
+
+.question-content { font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem; color: var(--ot-text); }
+
+/* MC Options */
+.option-item {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    padding: 0.875rem 1rem;
+    border: 2px solid var(--ot-border);
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: var(--ot-bg);
+}
+
+.option-item:hover { border-color: var(--ot-primary); background: rgba(99,102,241,0.04); }
+.option-item.selected { border-color: var(--ot-primary); background: rgba(99,102,241,0.08); }
+.option-item.correct { border-color: var(--ot-success); background: rgba(16,185,129,0.08); }
+.option-item.incorrect { border-color: var(--ot-danger); background: rgba(239,68,68,0.08); }
+
+.option-item .option-radio {
+    width: 22px; height: 22px;
+    border: 2px solid var(--ot-border);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.15s ease;
+}
+
+.option-item.selected .option-radio {
+    border-color: var(--ot-primary);
+    background: var(--ot-primary);
+}
+
+.option-item.selected .option-radio::after {
+    content: ''; width: 8px; height: 8px;
+    background: #fff; border-radius: 50%;
+}
+
+.option-item .option-label { font-weight: 600; color: var(--ot-primary); min-width: 20px; }
+.option-item .option-text { flex: 1; }
+
+/* TF Container (Modern Flex Layout) */
+.tf-container {
+    margin-top: 1.5rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--ot-border);
+}
+.tf-row {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background: var(--ot-bg-card);
+    border-bottom: 1px solid var(--ot-border);
+}
+.tf-row:last-child { border-bottom: none; }
+.tf-content { flex: 1; padding-right: 1rem; line-height: 1.6; }
+.tf-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+.tf-btn {
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--ot-border);
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+@media (max-width: 576px) {
+    .tf-row { flex-direction: column; align-items: flex-start; }
+    .tf-content { padding-right: 0; margin-bottom: 0.75rem; }
+    .tf-actions { width: 100%; justify-content: flex-end; }
+}
+
+.tf-btn:hover { border-color: var(--ot-primary); }
+.tf-btn.selected-true { border-color: var(--ot-success); background: rgba(16,185,129,0.1); color: var(--ot-success); }
+.tf-btn.selected-false { border-color: var(--ot-danger); background: rgba(239,68,68,0.1); color: var(--ot-danger); }
+
+/* Short Answer */
+.short-input {
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--ot-border);
+    border-radius: 10px;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 300px;
+    background: var(--ot-bg);
+    color: var(--ot-text);
+    transition: border-color 0.15s;
+}
+.short-input:focus { border-color: var(--ot-primary); outline: none; box-shadow: 0 0 0 3px rgba(99,102,241,0.15); }
+
+/* Navigator */
+.exam-navigator {
+    width: 220px;
+    border-left: 1px solid var(--ot-border);
+    background: var(--ot-bg);
+    overflow-y: auto;
+    padding: 1rem;
+    flex-shrink: 0;
+}
+
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+}
+
+.nav-btn {
+    width: 100%; aspect-ratio: 1;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid var(--ot-border);
+    border-radius: 8px;
+    font-weight: 600; font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    background: var(--ot-bg-card);
+    color: var(--ot-text);
+}
+
+.nav-btn:hover { border-color: var(--ot-primary); }
+.nav-btn.current { border-color: var(--ot-primary); background: var(--ot-primary); color: #fff; }
+.nav-btn.answered { border-color: var(--ot-success); background: rgba(16,185,129,0.15); color: var(--ot-success); }
+.nav-btn.flagged { border-color: var(--ot-accent); background: rgba(245,158,11,0.15); }
+
+/* Footer */
+.exam-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    background: var(--ot-bg-card);
+    border-top: 1px solid var(--ot-border);
+    flex-shrink: 0;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+}
+
+.exam-part-footer {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    background: rgba(99,102,241,0.1) !important;
+    color: var(--ot-primary) !important;
+    border: 1px solid rgba(99,102,241,0.2);
+    font-weight: 700;
+}
+
+/* =====================================================
+   Mobile
+   ===================================================== */
+@media (max-width: 768px) {
+    .exam-passage { display: none; } /* shown as collapsible */
+    .exam-navigator { display: none; } /* shown as offcanvas */
+    .exam-question-panel { padding: 1rem; }
+
+    .option-item { padding: 1rem; font-size: 1rem; }
+    .option-item .option-radio { width: 28px; height: 28px; }
+
+    .tf-btn { width: 44px; height: 44px; font-size: 1.1rem; }
+
+    .exam-footer { padding: 0.75rem 1rem; }
+    .exam-header { padding: 0.5rem 0.75rem; }
+    .exam-timer { font-size: 1rem; padding: 0.4rem 0.75rem; }
+}
+
+.passage-inline {
+    background: #fdf2f2;
+    border-left: 4px solid #ef4444;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    line-height: 1.8;
+}
+.question-item-wrap {
+    padding: 2rem;
+    background: var(--ot-bg-card);
+    border: 1px solid var(--ot-border);
+    border-radius: var(--ot-radius);
+    transition: box-shadow 0.3s;
+}
+.question-item-wrap:hover {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.exam-body { display: flex; flex: 1; overflow: hidden; height: calc(100vh - 120px); }
+.exam-question-panel {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem 10% 10rem 10%;
+    scroll-behavior: smooth;
+    /*background: #f8f9fa;*/
+}
+@media (max-width: 768px) {
+    .exam-question-panel { padding: 1rem 1rem 5rem 1rem; }
+}
+
+.offcanvas {
+    background: var(--ot-bg-card);
+}
+.offcanvas-title {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--ot-text);
+}

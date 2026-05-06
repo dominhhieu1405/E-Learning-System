@@ -1,0 +1,61 @@
+.bg-bronze {
+    background-color: #cd7f32;
+}
+
+.custom-leaderboard-table thead th {
+    background: var(--ot-bg-card);
+    color: var(--ot-text);
+}
+.custom-leaderboard-table tbody td, .custom-leaderboard-table tbody tr {
+    background: var(--ot-bg-card);
+}
+body.dark .custom-leaderboard-table tbody td {
+    background-color: var(--ot-bg-card-hover);
+    color: var(--ot-text);
+}
+
+/* Dark Mode Overrides */
+body.dark .ot-card {
+    background-color: #1a1d21 !important;
+    color: #fff !important;
+}
+
+body.dark .custom-leaderboard-table {
+    color: #fff !important;
+}
+
+body.dark .custom-leaderboard-table thead {
+    background: var(--ot-bg-card);
+    color: #cbd5e1 !important;
+}
+
+body.dark .custom-leaderboard-table td, body.dark .custom-leaderboard-table th {
+    border-color: #2d3748 !important;
+}
+
+body.dark .custom-leaderboard-table tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark .text-muted {
+    color: #94a3b8 !important;
+}
+
+body.dark .table-active {
+    color: #fff !important;
+}
+
+@media (max-width: 576px) {
+    .custom-leaderboard-table td, .custom-leaderboard-table th {
+        padding-top: 0.75rem;
+        padding-bottom: 0.75rem;
+    }
+
+    .custom-leaderboard-table .fs-5 {
+        font-size: 1.1rem !important;
+    }
+
+    .custom-leaderboard-table .ps-4 {
+        padding-left: 1rem !important;
+    }
+}

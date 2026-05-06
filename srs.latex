@@ -1,0 +1,851 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\textbf{SOFTWARE REQUIREMENTS SPECIFICATION}
+
+\textbf{Online Learning and Testing System (Học và Thi Online)}
+
+Comprehensive Web-Based Educational Platform
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4286}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.5714}}@{}}
+\toprule()
+\endhead
+\textbf{Document Version} & 1.1 \\
+\textbf{Standard} & IEEE 830-1998 \\
+\textbf{Date} & April 2026 \\
+\textbf{Status} & Final \\
+\textbf{Project Category} & Educational Technology (EdTech) \\
+\bottomrule()
+\end{longtable}
+
+\emph{This document is a Technical Annex to the Service Agreement
+between the parties named in Appendix B.}
+
+\begin{quote}
+\textbf{Revision History}
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1496}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1923}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3205}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3376}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Version}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Date}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Author}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Description}
+\end{minipage} \\
+\midrule()
+\endhead
+1.1 & April 2026 & Business Analyst / Architect & Focused specifically on User-side requirements (removed Admin elements). \\
+\bottomrule()
+\end{longtable}
+
+
+\textbf{Table of Contents}
+
+\textbf{1. Introduction}
+
+
+\textbf{1.1 Purpose}
+
+This Software Requirements Specification (SRS) describes the functional
+and non-functional requirements for the user-facing side of the Online Learning and Testing System --- a web
+application designed to help students practice exams, participate in online courses, and track their academic performance.
+Administrative features are specifically excluded from this document's scope.
+
+\textbf{1.2 Project Scope}
+
+The system is a comprehensive educational platform offering the following
+core features for users:
+
+\begin{itemize}
+\item
+  Users can register, log in (including Google OAuth), and manage their profiles.
+\item
+  Users can browse, search, and participate in online courses, as well as access study documents.
+\item
+  Users can take timed exams (THPT, HSA, TSA) with varied question formats (Multiple Choice, True/False, Fill-in-the-blanks, etc.).
+\item
+  The system provides real-time exam sessions, automatic grading, detailed result analysis, and leaderboard rankings.
+\item
+  Users can interact by posting comments on courses, lessons, and exams.
+\end{itemize}
+
+\textbf{1.3 Definitions}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2991}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7009}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Term}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Meaning}
+\end{minipage} \\
+\midrule()
+\endhead
+Exam Session & A unique instance of a user taking an exam, tracking time and answers. \\
+THPT / HSA / TSA & Types of standardized educational exams supported by the system. \\
+Passage Group & A shared reading text or context block linked to multiple questions. \\
+Google OAuth & An authentication method allowing users to log in using their Google accounts. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{1.4 References}
+
+\begin{itemize}
+\item
+  IEEE Std 830-1998: Recommended Practice for Software Requirements
+  Specifications
+\item
+  Existing Source Code Repository (Backend/Resources).
+\end{itemize}
+
+\textbf{1.5 Overview}
+
+This document outlines the overall description of the system, followed by detailed functional requirements (use cases), non-functional requirements, external interfaces, and constraints.
+
+\textbf{2. Overall Description}
+
+
+\textbf{2.1 Product Perspective}
+
+The system is a standalone web application tailored for students. It interacts with external authentication providers (Google) for seamless login experiences. It assumes the existence of a backend administration panel managed separately.
+
+\textbf{2.2 Product Functions}
+
+The main functions of the user-facing system are:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1068}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2671}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6261}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Function}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Description}
+\end{minipage} \\
+\midrule()
+\endhead
+FR-001 & Authentication & Registration, Standard Login, and Google OAuth Login. \\
+FR-002 & Profile Management & Viewing and editing user information and avatar. \\
+FR-003 & Exam Browsing \& Search & Finding exams, filtering, and viewing exam details. \\
+FR-004 & Exam Execution & Taking exams, tracking time per part, saving snapshots, and automatic grading. \\
+FR-005 & Results \& Leaderboard & Reviewing detailed answers and viewing competitive rankings. \\
+FR-006 & Course \& Lesson Learning & Browsing courses and tracking lesson progress. \\
+FR-007 & Document Browsing & Viewing and downloading study materials. \\
+FR-008 & Comment \& Interaction & Posting comments and interacting with other users' comments. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{2.3 Users of the System}
+
+\textbf{2.3.1 Student / User}
+
+A student is any person who uses the website to study, practice exams, and track their scores.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2991}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7009}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Attribute}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Detail}
+\end{minipage} \\
+\midrule()
+\endhead
+Technical level & Basic web user. \\
+Main actions & Log in, study courses, take exams, review results. \\
+Access level & Standard (own data only). \\
+\bottomrule()
+\end{longtable}
+
+\textbf{2.4 Operating Environment}
+
+\begin{itemize}
+\item
+  Web browsers: Chrome, Firefox, Safari, Edge (latest versions).
+\item
+  Devices: Desktop, laptop, and mobile devices (responsive design).
+\item
+  Server Environment: PHP, MySQL (InnoDB), Apache/Nginx.
+\end{itemize}
+
+\textbf{2.5 Constraints}
+
+\begin{itemize}
+\item
+  The application must be fully responsive and optimized for mobile exams.
+\item
+  All pages must use HTTPS to keep user data safe.
+\end{itemize}
+
+\textbf{2.6 Assumptions and Dependencies}
+
+\textbf{2.6.1 Assumptions}
+
+\begin{itemize}
+\item
+  Users have a stable internet connection during exam sessions to save snapshots.
+\item
+  All users provide real and accurate personal information when registering.
+\end{itemize}
+
+\textbf{2.6.2 Dependencies}
+
+\begin{itemize}
+\item
+  Google API is available for OAuth authentication.
+\end{itemize}
+
+\textbf{2.7 User Needs}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2350}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3205}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.4444}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{User Need}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Why it matters}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{How the system handles it}
+\end{minipage} \\
+\midrule()
+\endhead
+Realistic Practice & Students need an environment similar to real exams. &
+Timed sessions, multi-part tests, and varied question formats. \\
+Progress Tracking & Students want to see their improvements. & Leaderboards, detailed result pages, and score history. \\
+Accessible Content & Content should be easy to find and read. & Structured courses, downloadable documents, and responsive UI. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3. Specific Functional Requirements}
+
+This section describes the detailed functional requirements of the user interface using standardized use case tables.
+
+\textbf{3.1 FR-001 --- User Authentication (Login/Register)}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & User Authentication \\
+\textbf{Use Case ID} & FR-001 \\
+\textbf{XRef} & Section 2.2, FR-001 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User clicks "Login" or "Register" on the homepage. \\
+\textbf{Precondition} & User has a valid email or a Google account. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. User selects standard login or "Login with Google".
+
+2. If standard, user enters credentials; system validates against database.
+
+3. If Google, user is redirected to Google OAuth; upon success, system checks or creates account.
+
+4. System creates session and redirects to Home or Profile.
+\end{quote}
+\end{minipage} \\
+\textbf{Alternative Paths} & If email exists during Google login, link account. If invalid standard credentials, show error. \\
+\textbf{Postcondition} & User is authenticated and can access personalized content. \\
+\textbf{Exception Paths} & Login fails due to incorrect password or network error. \\
+\textbf{Other} & Account locked after 5 failed attempts for security. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3.2 FR-002 --- Profile Management}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & Profile Management \\
+\textbf{Use Case ID} & FR-002 \\
+\textbf{XRef} & Section 2.2, FR-002 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User clicks on their avatar and selects "Profile". \\
+\textbf{Precondition} & User is logged into the system. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. User views their current profile details (Name, Email).
+
+2. User edits display name or uploads a new avatar.
+
+3. User submits the changes.
+
+4. System updates the database and displays a success message.
+\end{quote}
+\end{minipage} \\
+\textbf{Alternative Paths} & If image upload fails validation (e.g., file too large), system shows an error message. \\
+\textbf{Postcondition} & User profile information is updated. \\
+\textbf{Exception Paths} & Database update failure, invalid image format for avatar. \\
+\textbf{Other} & Profile changes are reflected across the system immediately. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3.3 FR-003 --- Exam Browsing \& Search}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & Exam Browsing \& Search \\
+\textbf{Use Case ID} & FR-003 \\
+\textbf{XRef} & Section 2.2, FR-003 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User navigates to the "Exams" page or uses the search bar. \\
+\textbf{Precondition} & None. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. System displays a paginated list of available exams.
+
+2. User filters exams by type (THPT, HSA, TSA) or searches by keyword.
+
+3. User clicks on an exam card.
+
+4. System shows the Exam Detail page containing duration, number of questions, and description.
+\end{quote}
+\end{minipage} \\
+\textbf{Postcondition} & User is on the Exam Detail page, ready to start. \\
+\textbf{Exception Paths} & No exams found matching the search criteria. \\
+\textbf{Other} & Search is case-insensitive. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3.4 FR-004 --- Exam Execution}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & Exam Execution \\
+\textbf{Use Case ID} & FR-004 \\
+\textbf{XRef} & Section 2.2, FR-004 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User clicks "Start Exam" on an Exam Detail page. \\
+\textbf{Precondition} & User is logged in and an exam has been selected. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. System generates a unique \texttt{exam\_sessions} record and \texttt{session\_key}.
+
+2. System renders the exam interface with a countdown timer.
+
+3. User navigates through questions (MC, TF, matching, etc.) and inputs answers.
+
+4. System periodically saves \texttt{snapshot} JSON via background AJAX requests to prevent data loss.
+
+5. User clicks Submit or time expires.
+
+6. System calculates scores and sets session status to \texttt{completed}.
+\end{quote}
+\end{minipage} \\
+\textbf{Alternative Paths} & If user disconnects, session can be resumed via \texttt{session\_key} and snapshot. \\
+\textbf{Postcondition} & Exam session is completed, results are recorded. \\
+\textbf{Exception Paths} & Loss of internet connection, session timeout. \\
+\textbf{Other} & Snapshots are saved every 30 seconds to prevent data loss. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3.5 FR-005 --- Results \& Leaderboard}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & Results \& Leaderboard \\
+\textbf{Use Case ID} & FR-005 \\
+\textbf{XRef} & Section 2.2, FR-005 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User completes an exam or navigates to the Leaderboard tab. \\
+\textbf{Precondition} & User has completed at least one exam session. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. System displays the overall score, time spent, and detailed breakdown per question.
+
+2. User reviews explanations for incorrect answers.
+
+3. User clicks "View Leaderboard".
+
+4. System displays the top-ranking students for that specific exam based on score and time.
+\end{quote}
+\end{minipage} \\
+\textbf{Postcondition} & User understands their performance metrics. \\
+\textbf{Exception Paths} & Data retrieval error from the leaderboard service. \\
+\textbf{Other} & Ranking is updated in real-time. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3.6 FR-006 --- Course \& Lesson Learning}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & Course \& Lesson Learning \\
+\textbf{Use Case ID} & FR-006 \\
+\textbf{XRef} & Section 2.2, FR-006 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User navigates to the "Courses" page and selects a course. \\
+\textbf{Precondition} & User is logged in. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. System displays the course curriculum and lesson list.
+
+2. User clicks on a lesson to start learning.
+
+3. System displays the lesson content (video player, text, or embedded materials).
+
+4. User marks the lesson as complete.
+\end{quote}
+\end{minipage} \\
+\textbf{Alternative Paths} & None. \\
+\textbf{Postcondition} & User progresses through the course syllabus. \\
+\textbf{Exception Paths} & Video streaming error, document load failure. \\
+\textbf{Other} & Progress is tracked automatically as lessons are viewed. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3.7 FR-007 --- Document Browsing}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & Document Browsing \\
+\textbf{Use Case ID} & FR-007 \\
+\textbf{XRef} & Section 2.2, FR-007 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User navigates to the "Documents" repository. \\
+\textbf{Precondition} & User has access rights to the documents section. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. System displays categories of study documents (PDFs, docs).
+
+2. User searches or filters for specific topics.
+
+3. User clicks on a document to preview or download it.
+\end{quote}
+\end{minipage} \\
+\textbf{Postcondition} & User successfully accesses or downloads the study material. \\
+\textbf{Exception Paths} & Document file not found on the server. \\
+\textbf{Other} & Documents can be previewed before downloading. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{3.8 FR-008 --- Comment \& Interaction}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2137}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7863}}@{}}
+\toprule()
+\endhead
+\textbf{Use Case Name} & Comment \& Interaction \\
+\textbf{Use Case ID} & FR-008 \\
+\textbf{XRef} & Section 2.2, FR-008 \\
+\textbf{Actor} & Student \\
+\textbf{Trigger} & User views a lesson, course, or exam details and navigates to the comment section. \\
+\textbf{Precondition} & User is logged in. \\
+\textbf{Basic Path} & \begin{minipage}[t]{\linewidth}\raggedright
+\begin{quote}
+1. System displays existing comments for the specific item.
+
+2. User types a new comment in the input box and clicks "Submit".
+
+3. System saves the comment and updates the comment list instantly.
+\end{quote}
+\end{minipage} \\
+\textbf{Alternative Paths} & If the user tries to submit an empty comment, the system disables the submit button or shows a warning. \\
+\textbf{Postcondition} & The user's comment is visible to others. \\
+\textbf{Exception Paths} & Submission failure due to spam filter or network issues. \\
+\textbf{Other} & Comments support basic text formatting and emojis. \\
+\bottomrule()
+\end{longtable}
+
+\textbf{4. Non-Functional Requirements}
+
+\textbf{4.1 Performance}
+
+\begin{itemize}
+\item
+  Exam rendering must load swiftly. Pre-fetching question images/resources is recommended.
+\item
+  Snapshot syncing during exams must be asynchronous (AJAX) to prevent blocking the user interface.
+\end{itemize}
+
+\textbf{4.2 Security}
+
+\begin{itemize}
+\item
+  Exam \texttt{session\_key} acts as an anti-tampering measure.
+\item
+  SQL injection prevention via ORM or prepared statements.
+\item
+  Authentication cookies must be HttpOnly and Secure.
+\end{itemize}
+
+\textbf{4.3 Usability}
+
+\begin{itemize}
+\item
+  The exam interface must feature a fixed, visible countdown timer.
+\item
+  Clear visual indicators for answered vs. unanswered questions in the navigation palette.
+\end{itemize}
+
+\textbf{4.4 Maintainability}
+
+\begin{itemize}
+\item
+  Strict MVC architecture (\texttt{Models}, \texttt{Views}, \texttt{Controllers}, \texttt{Services}).
+\item
+  Modular Blade components in \texttt{resources/views/user/components} to reuse UI elements across pages.
+\end{itemize}
+
+\textbf{5. External Interface Requirements}
+
+
+\textbf{5.1 User Interface}
+
+\begin{itemize}
+\item
+  \textbf{Home Page (\texttt{home.blade.php})}: Course recommendations, latest exams, statistics.
+\item
+  \textbf{Exam Detail (\texttt{exam-detail.blade.php})}: Description, rules, and entry point.
+\item
+  \textbf{Exam Interface (\texttt{exam.blade.php})}: Split view for Passage Groups (reading text on left, questions on right), question palette, timer.
+\item
+  \textbf{Profile (\texttt{profile.blade.php})}: User information, avatar upload, and history.
+\item
+  \textbf{Leaderboard (\texttt{leaderboard.blade.php})}: Tabular view of top scores for specific exams.
+\end{itemize}
+
+\textbf{5.2 Software Interfaces}
+
+\begin{itemize}
+\item
+  \textbf{Google OAuth}: Communicates via HTTPS to retrieve user email, display\_name, and avatar.
+\item
+  \textbf{Database Engine}: MySQL interface for relational queries.
+\end{itemize}
+
+\textbf{5.3 Hardware Interfaces}
+
+No special hardware is required. The system works on any device with a
+modern web browser and internet access.
+
+\textbf{5.4 Communication Interfaces}
+
+\begin{itemize}
+\item
+  HTTPS --- all communication between the browser and the server must be
+  encrypted.
+\item
+  REST API --- used to connect to the internal endpoints for exam syncing.
+\end{itemize}
+
+\textbf{6. Use Case Summary}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1068}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2671}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2671}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3590}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{ID}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Use Case Name}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Actor}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Short Description}
+\end{minipage} \\
+\midrule()
+\endhead
+FR-001 & User Auth & Student & Register, login, or Google OAuth. \\
+FR-002 & Profile Manage & Student & View and update profile/avatar. \\
+FR-003 & Exam Browsing & Student & Filter and find exams. \\
+FR-004 & Take Exam & Student & Start, sync, and submit an exam. \\
+FR-005 & Results \& Leaderboard & Student & View score and rankings. \\
+FR-006 & Learn Course & Student & Access video lessons and content. \\
+FR-007 & Document Browse & Student & View and download study docs. \\
+FR-008 & Comment & Student & Post comments on learning materials. \\
+\bottomrule()
+\end{longtable}
+
+
+\textbf{7. Project Scope, Constraints \& Limitations}
+
+\textbf{7.1 What is included}
+
+\begin{itemize}
+\item
+  Full user-facing exam lifecycle (Execution, Grading, Leaderboard).
+\item
+  Course and Document distribution.
+\item
+  Google Authentication integration.
+\item
+  Profile management interfaces.
+\item
+  Commenting and user interaction system.
+\end{itemize}
+
+\textbf{7.2 What is NOT included (Out of Scope)}
+
+\begin{itemize}
+\item
+  Administrator Dashboard and AI Question Parsing (handled in a separate document).
+\item
+  Automated proctoring (webcam recording/eye tracking).
+\item
+  VIP/Pro subscription plans and payment gateway integration.
+\item
+  E-commerce features (Shopping, Orders, and Reward Withdrawals).
+\item
+  Web scraping or automated content crawling (DOM Crawler).
+\end{itemize}
+
+\textbf{7.3 Constraints}
+
+\begin{itemize}
+\item
+  The system must process complex question formats natively (True/False clusters, short answers) requiring specialized DB tables.
+\item
+  The system must use HTTPS and follow basic OWASP security guidelines
+  (see Section 4.2).
+\end{itemize}
+
+\textbf{7.4 Limitations}
+
+\begin{itemize}
+\item
+  The system has not been load-tested for large numbers of concurrent
+  users beyond those specified in Section 4.1.
+\end{itemize}
+
+\begin{quote}
+\textbf{Appendix A: Glossary}
+\end{quote}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2350}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.7650}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Term}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Meaning}
+\end{minipage} \\
+\midrule()
+\endhead
+SRS & Software Requirements Specification --- this document. \\
+Session Key & A unique hash verifying an active exam attempt. \\
+Snapshot & JSON data representing the user's current progress in an exam. \\
+IEEE 830 & A standard guideline for writing SRS documents, published in
+1998. \\
+\bottomrule()
+\end{longtable}
+
+\begin{quote}
+\textbf{Appendix B: Document Approval \& Legal Agreement}
+\end{quote}
+
+\textbf{B.1 Contract Reference}
+
+This SRS document is a Technical Annex to the following Service
+Agreement:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.3739}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.6261}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Field}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Detail}
+\end{minipage} \\
+\midrule()
+\endhead
+Service Agreement Reference No. &
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ \\
+Agreement Date &
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ \\
+Developer (Service Provider) &
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ \\
+Client (Service Recipient) &
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ \\
+Project Name & Online Learning and Testing System \\
+SRS Document Version & 1.1 \\
+SRS Issue Date & April 2026 \\
+\bottomrule()
+\end{longtable}
+
+\textbf{B.2 Scope Confirmation}
+
+By signing this document, both parties confirm that:
+
+\begin{itemize}
+\item
+  The features and requirements described in Sections 1 through 7 of
+  this SRS represent the complete and agreed scope of work for this
+  project.
+\item
+  Any feature, behavior, or screen not explicitly described in this
+  document is considered out of scope.
+\item
+  The Client has read and understood the contents of this document,
+  including the Out of Scope items listed in Section 7.2.
+\end{itemize}
+
+\textbf{B.3 Change Control}
+
+Any change to the scope defined in this SRS --- including adding,
+removing, or modifying features --- must follow this process:
+
+\begin{itemize}
+\item
+  Step 1: The requesting party submits a written Change Request
+  describing the proposed change.
+\item
+  Step 2: The Developer provides a written impact assessment (estimated
+  time and cost).
+\item
+  Step 3: Both parties sign a Change Request Addendum before any work on
+  the change begins.
+\item
+  Changes that have not been agreed upon in writing are not binding on
+  either party.
+\end{itemize}
+
+\textbf{B.4 Acceptance Criteria}
+
+The project will be considered complete and ready for handover when:
+
+\begin{itemize}
+\item
+  All functional requirements in Section 3 have
+  been implemented and are working as described.
+\item
+  All non-functional requirements in Section 4 have been met to a
+  reasonable degree.
+\item
+  The Client has performed a review and signed the Acceptance section
+  (B.5) below.
+\end{itemize}
+
+\textbf{B.5 Approval Signatures}
+
+By signing below, both parties agree that this SRS document is accurate,
+complete, and forms part of the binding agreement between them.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.2350}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3825}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3825}}@{}}
+\toprule()
+\begin{minipage}[b]{\linewidth}\raggedright
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Developer (Service Provider)}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Client (Service Recipient)}
+\end{minipage} \\
+\midrule()
+\endhead
+Full Name & & \\
+Title / Role & System Architect & \\
+Company / Individual & & \\
+Signature & \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ &
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ \\
+Date & & \\
+\bottomrule()
+\end{longtable}
+
+\emph{Governing law: This document and the associated Service Agreement
+are governed by the laws of the Socialist Republic of Vietnam. Any
+disputes arising from this document shall be resolved in accordance with
+Vietnamese law.}
+
+\end{document}

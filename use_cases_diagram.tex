@@ -1,0 +1,330 @@
+
+\documentclass[tikz,border=25pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, calc, fit, backgrounds}
+
+% ===================================================
+%  BIỂU ĐỒ CA SỬ DỤNG - HỆ THỐNG E-LEARNING
+%  Phiên bản cải tiến: bố cục 2 cột, phân vùng con
+% ===================================================
+
+\begin{document}
+\begin{tikzpicture}[
+    >=stealth,
+    % Use-case node style
+    usecase/.style={
+        ellipse, draw=blue!60, very thick,
+        minimum width=3.6cm, minimum height=1.1cm,
+        align=center, fill=cyan!8,
+        text width=3.2cm, font=\small
+    },
+    % Actor label
+    actor/.style={align=center, font=\small\bfseries},
+    % <<include>> arrow
+    include/.style={dashed, ->, thick, blue!70},
+    % <<extend>> arrow
+    extend/.style={dashed, ->, thick, orange!80!black},
+    % Generalization (inheritance) arrow
+    generalization/.style={solid, -{Triangle[open,scale=1.5]}, thick},
+    % Plain association line
+    association/.style={solid, thick, gray!60},
+    % Outer system boundary
+    system/.style={
+        draw=black!70, very thick, rectangle,
+        inner sep=0.8cm, fill=gray!4, rounded corners=6pt
+    },
+    % Inner subsystem boundary
+    subsys/.style={
+        draw=blue!35, thick, dashed, rectangle,
+        inner sep=0.5cm, fill=blue!2, rounded corners=4pt
+    }
+]
+
+% ============================================================
+%  MACRO VẼ STICKMAN ACTOR
+% ============================================================
+\def\stickman#1#2{%
+    \node[circle, draw=black, thick, minimum size=0.55cm, fill=white]
+        (head#1) at (#2) {};
+    \coordinate (body#1) at ($(head#1.south)-(0,0.65)$);
+    \draw[thick] (head#1.south) -- (body#1);
+    % arms
+    \draw[thick]
+        ($(head#1.south)!0.33!(body#1)-(0.5,0)$) --
+        ($(head#1.south)!0.33!(body#1)+(0.5,0)$);
+    % legs
+    \draw[thick] (body#1) -- ++(-0.4,-0.6);
+    \draw[thick] (body#1) -- ++(0.4,-0.6);
+}
+
+% ============================================================
+%  KHAI BÁO USE-CASE NODES
+%  Bố cục: cột trái x≈0, cột phải x≈6.5
+%  Nhóm theo chức năng, khoảng cách y = 1.8
+% ============================================================
+
+% ---- 1. AUTHENTICATION (y: 0 → -5.5) ----
+\node[usecase] (Register)  at (-3.5,    -0.5)    {Register Account};
+\node[usecase, font=\small\itshape]
+              (Login)     at (2,   -1.8)  {Login \textit{(abstract)}};
+\node[usecase] (StdLogin)  at (-0.5,-3.8)  {Standard Login};
+\node[usecase] (GglLogin)  at ( 4.5,-3.8)  {Login with Google};
+% ValCred đặt thẳng bên dưới StdLogin (cùng x=-2.2) để mũi tên include là thẳng đứng
+\node[usecase] (ValCred)   at (-0.5,-5.5)  {Validate\\Credentials};
+
+% ---- 2. PROFILE (y: -7.5 → -10.5) ----
+% ManageProf: node cha trừu tượng (abstract parent)
+\node[usecase, font=\small\itshape] (ManageProf) at (2, -7.5)
+    {Manage Profile \textit{(abstract)}};
+% 3 use case con bố cục hàng ngang (fan-out)
+\node[usecase] (ViewProf)  at (-3, -9.8)  {View Profile};
+\node[usecase] (EditProf)  at ( 2,   -9.8)  {Edit Profile Info};
+\node[usecase] (UpAvatar)  at ( 7, -9.8)  {Upload Avatar};
+% Fork point cho quan hệ generalization
+\coordinate (ProfFork) at (2, -8.5);
+
+% ---- 3. EXAM DISCOVERY (y: -13.5 → -17.5) ----
+% DiscoverEx: node cha trừu tượng (abstract parent) — căn tâm x=2
+\node[usecase, font=\small\itshape] (DiscoverEx) at (2, -11.5)
+    {Discover Exam \textit{(abstract)}};
+% 3 use case con giãn rộng tương tự Profile (-3, 2, 7)
+\node[usecase] (BrowseEx)  at (-3, -13.8)  {Browse Exam List};
+\node[usecase] (SearchEx)  at ( 2, -13.8)  {Search by Keyword};
+\node[usecase] (FilterEx)  at ( 7, -13.8)  {Filter\\(THPT/HSA/TSA)};
+% Fork point cùng tâm x=2 với DiscoverEx
+\coordinate (DiscFork) at (2, -12.5);
+% ViewDet căn giữa bên dưới 3 con (x=2)
+\node[usecase] (ViewDet)   at (2,-16)  {View Exam Detail};
+
+% ---- 4. EXAM ENGINE (horizontal generalization) ----
+% TakeExam: node cha trừu tượng, ở cột trái
+\node[usecase, font=\small\itshape] (TakeExam) at (-3.5, -20)
+    {Take Exam \textit{(abstract)}};
+% 4 con dịch sang phải (x=4.5) — tạo khoảng cho bus ngang
+\node[usecase] (StartEx)   at (2.5, -18)  {Start Exam Session};
+\node[usecase] (InputAns)  at (2.5, -19.5)  {Input Answers};
+\node[usecase] (Resume)    at (2.5, -21)  {Resume Session};
+\node[usecase] (Submit)    at (2.5, -22.5)  {Submit Exam};
+% Bus rail đứng tại x=2.2 (giữa TakeExam.east và các con)
+\coordinate (ExamBusTop) at (-0.5, -18);
+\coordinate (ExamBusMid) at (-0.5, -20);
+\coordinate (ExamBusBot) at (-0.5, -22.5);
+% AutoSave/AutoGrad dịch sang phải khỏi các con
+\node[usecase] (AutoSave)  at (9,-19.5)  {Auto-save Snapshot};
+\node[usecase] (AutoGrad)  at (9,-22.5)  {Automatic Grading};
+
+% ---- 5. ANALYTICS (vertical — giống Login) ----
+% ViewAnalytics: cha trừu tượng ở trên, tâm x=2.5
+\node[usecase, font=\small\itshape] (ViewAnalytics) at (2.5, -24)
+    {View Analytics \textit{(abstract)}};
+% 2 con xếp ngang bên dưới — giống StdLogin/GglLogin
+\node[usecase] (ViewScore) at (-0.5, -26.3)  {View Overall Score};
+\node[usecase] (RevExp)    at (-0.5,    -28.3)  {Review Explanations};
+\node[usecase] (Leader)    at ( 5.5, -26.3)  {View Leaderboard};
+% Fork giữa 2 con — giống LoginFork
+\coordinate (AnaFork) at (2.5, -25.3);
+
+% ---- 6. E-LEARNING (y: -30.7 → -32.5) ----
+\node[usecase] (BrowseC)   at (0,  -30.7)  {Browse Courses};
+\node[usecase] (Study)     at (0,  -32.5)  {Study Lesson};
+
+% ---- 7. DOCUMENTS (y: -34.3 → -37.1) ----
+\node[usecase] (SearchDoc) at (0,  -34.3)  {Search Documents};
+\node[usecase] (Preview)   at (0,  -36.1)  {Preview Material};
+\node[usecase] (DownDoc)   at (6.5,-36.1)  {Download Document};
+
+% ---- 8. SOCIAL (y: -38.0 → -39.8) ----
+\node[usecase] (ViewCom)   at (0,  -38.0)  {View Comments};
+\node[usecase] (PostCom)   at (0,  -39.8)  {Post New Comment};
+\node[usecase] (FmtText)   at (6.5,-39.8)  {Format Text / Emoji};
+
+
+% ============================================================
+%  RANH GIỚI PHÂN HỆ CON (dashed inner boxes)
+% ============================================================
+\begin{scope}[on background layer]
+
+    \node[subsys,
+          fit=(Register)(Login)(StdLogin)(GglLogin)(ValCred),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:Authentication}]
+          (BoxAuth) {};
+    % Ghi chú: ValCred ở (-2.2,-5.5) thuộc BoxAuth, ManageProf ở (0,-7.5) thuộc BoxProf
+
+    \node[subsys,
+          fit=(ManageProf)(ViewProf)(EditProf)(UpAvatar),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:User Profile}]
+          (BoxProf) {};
+
+    \node[subsys,
+          fit=(DiscoverEx)(BrowseEx)(SearchEx)(FilterEx)(ViewDet),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:Exam Discovery}]
+          (BoxDisc) {};
+
+    \node[subsys,
+          fit=(TakeExam)(StartEx)(InputAns)(Resume)(Submit)(AutoSave)(AutoGrad),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:Exam Engine}]
+          (BoxEngine) {};
+
+    \node[subsys,
+          fit=(ViewAnalytics)(ViewScore)(RevExp)(Leader),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:Analytics}]
+          (BoxAna) {};
+
+    \node[subsys,
+          fit=(BrowseC)(Study),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:E-Learning}]
+          (BoxLearn) {};
+
+    \node[subsys,
+          fit=(SearchDoc)(Preview)(DownDoc),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:Documents}]
+          (BoxDoc) {};
+
+    \node[subsys,
+          fit=(ViewCom)(PostCom)(FmtText),
+          label={[font=\footnotesize\bfseries\color{blue!60}]above:Social}]
+          (BoxSoc) {};
+
+    % --- OUTER SYSTEM BOUNDARY ---
+    \node[system,
+          fit=(BoxAuth)(BoxProf)(BoxDisc)(BoxEngine)(BoxAna)(BoxLearn)(BoxDoc)(BoxSoc),
+          label={[font=\Large\bfseries, anchor=north, yshift=-0.5cm]north:E-Learning System}]
+          (System) {};
+
+\end{scope}
+
+
+% ============================================================
+%  VẼ ACTORS
+%  Student: bên trái hệ thống,  Google API: bên phải
+% ============================================================
+% Student đặt giữa chiều cao của toàn bộ biểu đồ (y≈-21)
+\stickman{Student}{-9, -21.0}
+\node[actor, below=1.2cm of headStudent] (LblStudent) {Student};
+
+\stickman{Google}{14, -3.8}
+\node[actor, below=1.2cm of headGoogle] (LblGoogle) {Google API};
+
+
+% ============================================================
+%  MỐI QUAN HỆ
+% ============================================================
+
+% ---------- Association: Student → các use case ----------
+\foreach \uc in {
+    Register, Login,
+    ManageProf,
+    DiscoverEx,
+    TakeExam,
+    ViewAnalytics,
+    BrowseC, Study,
+    SearchDoc, Preview,
+    ViewCom, PostCom}
+{
+    \draw[association] (LblStudent.east) -- (\uc.west);
+}
+
+% Association: Google API → GglLogin
+\draw[association] (LblGoogle.south) -- (GglLogin.east);
+
+
+% ---------- Generalization: StdLogin, GglLogin → Login ----------
+% LoginFork x=2 để thẳng hàng với Login tại (2,-1.8)
+\coordinate (LoginFork) at (2, -2.9);
+\draw[association] (StdLogin.north) |- (LoginFork);
+\draw[association] (GglLogin.north) |- (LoginFork);
+\draw[generalization] (LoginFork) -- (Login.south);
+
+% ---------- Generalization: ViewProf, EditProf, UpAvatar → ManageProf ----------
+\draw[association] (ViewProf.north)  |- (ProfFork);
+\draw[association] (EditProf.north)  -- (ProfFork);
+\draw[association] (UpAvatar.north)  |- (ProfFork);
+\draw[generalization] (ProfFork) -- (ManageProf.south);
+
+% ---------- Generalization: BrowseEx, SearchEx, FilterEx → DiscoverEx ----------
+\draw[association] (BrowseEx.north)  |- (DiscFork);
+\draw[association] (SearchEx.north)  -- (DiscFork);
+\draw[association] (FilterEx.north)  |- (DiscFork);
+\draw[generalization] (DiscFork) -- (DiscoverEx.south);
+
+% ---------- Generalization: 4 con → TakeExam (horizontal bus) ----------
+% Rail dọ tại x=2.2
+\draw[association] (ExamBusTop) -- (ExamBusBot);
+% Nánh ngang từ rail đến từng con
+\draw[association] (ExamBusTop)    -- (StartEx.west);
+\draw[association] (-0.5, -19.5)   -- (InputAns.west);
+\draw[association] (-0.5, -21)      -- (Resume.west);
+\draw[association] (ExamBusBot)    -- (Submit.west);
+% Mũi tên generalization từ rail → TakeExam (tam giác rỗng tại TakeExam.east)
+\draw[generalization] (ExamBusMid) -- (TakeExam.east);
+
+% ---------- Generalization: ViewScore, Leader → ViewAnalytics (vertical fork — giống Login) ----------
+\draw[association] (ViewScore.north) |- (AnaFork);
+\draw[association] (Leader.north)    |- (AnaFork);
+\draw[generalization] (AnaFork) -- (ViewAnalytics.south);
+
+
+% StdLogin → ValCred: mũi tên THẲNG ĐỨNG (ValCred nằm thẳng dưới StdLogin)
+\draw[include]
+    (StdLogin.south) -- node[midway, right, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (ValCred.north);
+
+% BrowseEx → ViewDet (chéo xuống phải: từ (-3,-15.8) đến (2,-17.5))
+\draw[include]
+    (BrowseEx.south) --
+    node[pos=0.45, above, sloped, fill=white, inner sep=1.5pt, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (ViewDet.north west);
+
+% SearchEx → ViewDet (thẳng đứng xuống)
+\draw[include]
+    (SearchEx.south) --
+    node[midway, right, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (ViewDet.north);
+
+% FilterEx → ViewDet (chéo xuống trái: từ (7,-15.8) đến (2,-17.5))
+\draw[include]
+    (FilterEx.south) --
+    node[pos=0.45, below, sloped, fill=white, inner sep=1.5pt, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (ViewDet.north east);
+
+% InputAns → AutoSave
+\draw[include]
+    (InputAns.east) --
+    node[midway, above, sloped, fill=white, inner sep=1pt, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (AutoSave.west);
+
+% Submit → AutoGrad
+\draw[include]
+    (Submit.east) --
+    node[midway, above, sloped, fill=white, inner sep=1pt, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (AutoGrad.west);
+
+% ViewScore → RevExp
+\draw[include]
+    (ViewScore.south) --
+    node[midway, right, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (RevExp.north);
+
+% Preview → DownDoc
+\draw[include]
+    (Preview.east) --
+    node[midway, above, sloped, font=\scriptsize\color{blue!80}]
+    {\guillemotleft include\guillemotright} (DownDoc.west);
+
+
+% ---------- <<extend>> ----------
+% AutoSave --extend--> Resume
+\draw[extend]
+    (AutoSave.south) |-
+    node[pos=0.75, below, sloped, font=\scriptsize\color{orange!80!black}]
+    {\guillemotleft extend\guillemotright} (Resume.east);
+
+% FmtText --extend--> PostCom
+\draw[extend]
+    (FmtText.west) --
+    node[midway, above, sloped, font=\scriptsize\color{orange!80!black}]
+    {\guillemotleft extend\guillemotright} (PostCom.east);
+
+
+\end{tikzpicture}
+\end{document}

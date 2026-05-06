@@ -1,0 +1,22 @@
+<?php
+return [
+    'title_prefix' => '結果 - ',
+    'result_title' => '試験結果: ',
+    'part' => 'パート',
+    'time' => '時間',
+    'back_to_list' => '一覧に戻る',
+    'leaderboard' => 'リーダーボード',
+    'review_title' => '受験内容を確認',
+    'hidden_answers_title' => '正解と解説は非表示です',
+    'hidden_answers_desc' => '管理者がこの試験の問題詳細を非表示に設定しています。総合スコアのみ閲覧可能です。',
+    'question' => '問題',
+    'unanswered' => '未回答',
+    'correct' => '正解',
+    'wrong' => '不正解',
+    'tf_label' => '真偽',
+    'your_choice' => 'あなたの選択',
+    'answer' => '正解',
+    'you' => 'あなた',
+    'empty' => '(空)',
+    'explanation' => '解説',
+];

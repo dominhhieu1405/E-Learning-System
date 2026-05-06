@@ -1,0 +1,52 @@
+{
+  "name": "LumDeals",
+  "short_name": "Lụm Deals",
+  "lang": "vi-VN",
+  "start_url": "https://dealhot.com/app/",
+  "display": "standalone",
+  "background_color": "white",
+  "categories": ["blog", "ecommerce"],
+  "theme_color": "#122636",
+  "description": "LumDeals.com app",
+  "icons": [
+    {
+      "src": "assets/img/favicon.png",
+      "sizes": "40x40",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/favicon.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/favicon.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/favicon.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/img/favicon.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/img/favicon.png",
+      "sizes": "168x168",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/img/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

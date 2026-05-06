@@ -1,0 +1,35 @@
+RewriteEngine on
+Options -Indexes
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-l
+RewriteRule ^(.*)$ index.php [L,QSA]
+
+
+
+
+<IfModule mod_expires.c>
+  # Activate mod
+  ExpiresActive on
+
+  # Declare fonts content-type
+  AddType application/vnd.ms-fontobject .eot
+  AddType application/x-font-ttf .ttf
+  AddType application/x-font-opentype .otf
+  AddType application/x-font-woff .woff
+  AddType application/x-font-woff2 .woff2
+  AddType image/svg+xml .svg
+
+  # Set cache duration
+  ExpiresByType application/vnd.ms-fontobject "access plus 1 year"
+  ExpiresByType application/x-font-ttf "access plus 1 year"
+  ExpiresByType application/x-font-opentype "access plus 1 year"
+  ExpiresByType application/x-font-woff "access plus 1 year"
+  ExpiresByType application/x-font-woff2  "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 year"
+
+  # Append "public" to header "Cache-Control"
+  <IfModule mod_headers.c>
+    Header append Cache-Control "public"
+  </IfModule>
+</IfModule>

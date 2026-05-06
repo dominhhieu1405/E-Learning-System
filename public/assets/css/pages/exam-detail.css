@@ -1,0 +1,6 @@
+.bg-bronze { background-color: #cd7f32; color: white; }
+.text-gradient-primary {
+    background: linear-gradient(135deg, var(--ot-primary), var(--ot-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
