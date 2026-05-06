@@ -1,6 +1,6 @@
 # OnThi.io.vn - Hệ thống Ôn thi & Đánh giá năng lực trực tuyến
 
-![OnThi.io.vn Banner](https://via.placeholder.com/1200x300.png?text=OnThi.io.vn+-+N%E1%BB%81n+t%E1%BA%A3ng+%C3%94n+thi+Tr%E1%BB%B1c+tuy%E1%BA%BFn)
+![OnThi.io.vn Banner](https://zpi.cx/b/vbiH33.png-webp?dl=1)
 
 **Website chính thức:** [https://onthi.io.vn](https://onthi.io.vn)
 
@@ -44,7 +44,7 @@ Hệ thống được xây dựng trên nền tảng Backend PHP theo mô hình 
 * **Backend:** PHP (8.x)
 * **Cơ sở dữ liệu:** MySQL (sử dụng thư viện `mysqli-database-class` cho ORM/Query Builder).
 * **Routing:** `pecee/simple-router` (Xử lý định tuyến RESTful API).
-* **View Engine:** `jenssegers/blade` (Blade Templating engine mang từ Laravel sang).
+* **View Engine:** `jenssegers/blade` (Blade Templating engine).
 * **Bảo mật:** `voku/anti-xss` (Ngăn chặn mã độc XSS), Password Hashing an toàn.
 * **Tích hợp bên thứ 3:** Google API Client (OAuth2 login).
 
@@ -53,7 +53,7 @@ Hệ thống được xây dựng trên nền tảng Backend PHP theo mô hình 
 ## 🚀 Hướng dẫn Cài đặt Môi trường Phát triển (Local Setup)
 
 ### Yêu cầu hệ thống:
-- PHP >= 8.0
+- PHP >= 8.1
 - MySQL >= 5.7 / MariaDB >= 10.3
 - Composer
 
@@ -61,8 +61,8 @@ Hệ thống được xây dựng trên nền tảng Backend PHP theo mô hình 
 
 **1. Clone dự án về máy**
 ```bash
-git clone https://github.com/your-repo/onthi.io.vn.git
-cd onthi.io.vn
+git clone https://github.com/dominhhieu1405/E-Learning-System.git
+cd E-Learning-System
 ```
 
 **2. Cài đặt các thư viện (Dependencies)**
@@ -89,7 +89,7 @@ Truy cập `http://localhost:8000` trên trình duyệt.
 Dự án được tổ chức tách biệt giữa mã nguồn hệ thống và tài nguyên truy cập công khai:
 
 ```
-onthi.io.vn/
+E-Learning-System/
 │
 ├── backend/               # Thư mục mã nguồn xử lý chính (Không expose ra web)
 │   ├── Command/           # Các script CLI
